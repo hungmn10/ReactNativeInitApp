@@ -1,5 +1,6 @@
 Application include:
-    config enviroments
+
+	config enviroments
     redux thunk config
     introduce
     main screen
