@@ -1,42 +1,27 @@
 import React, {Component} from 'react';
-import {View, Button, Text} from 'react-native';
 import {connect} from 'react-redux';
-import {CONFIG_TEST_PARAM} from "./constants/config";
-import {actionTest} from "./redux/actions";
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 
-const randomString = require('random-string');
+import ScreenIntroApp from './components/ScreenIntroApp'
+import ScreenMain from './components/ScreenMain'
 
-class MainApp extends Component<> {
+class MainApp extends Component {
   render() {
-    let {params} = this.props.reducerTest;
+    let initScreen = 'ScreenMain'
+    let MyScreen = createStackNavigator(
+      {
+        ScreenIntroApp: {screen: ScreenIntroApp},
+        ScreenMain: {screen: ScreenMain},
+      }, {
+        // headerMode: 'none', // hide tool bar
+        initialRouteName: initScreen,
+      }
+    );
 
     return (
-      <View>
-        <Text>
-          {'Hello this is init project'}
-        </Text>
-        <Text>
-          {CONFIG_TEST_PARAM}
-        </Text>
-        <Text>
-          {params}
-        </Text>
-        <Button
-          title={'Click here'}
-          onPress={() => {
-            this.props.actionTest(randomString({length: 20}))
-          }}
-        />
-
-      </View>
+      <MyScreen/>
     );
   }
-
 }
 
-const mapStateToProps = (state) => {
-  return {
-    reducerTest: state.reducerTest,
-  };
-}
-export default connect(mapStateToProps, {actionTest})(MainApp);
+export default (MainApp);
